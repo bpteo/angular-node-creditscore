@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: rest-jscreditscore-ing
   annotations:
-    kubernetes.io/ingress.class: 'nginx'
-    ingress.kubernetes.io/add-base-url: 'true'
-    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: traefik
+  namespace: creditscore
 spec:
   rules:
-  - http:
+  - host: creditscore.jeejeejango.com
+    http:
       paths:
-      - path: /$WERCKER_APPLICATION_OWNER_NAME/
+      - path: /
         backend:
           serviceName: rest-jscreditscore-svc
-          servicePort: 8088
+          servicePort: http

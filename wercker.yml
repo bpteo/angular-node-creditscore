@@ -20,7 +20,7 @@ push-to-dockerhub:
       - internal/docker-push:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
-          tag:  $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+          tag:  creditscore-$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
           #repository: $DOCKER_USERNAME/$WERCKER_APPLICATION_NAME
           #registry: https://index.docker.io/v2/
           working-dir: $WERCKER_ROOT

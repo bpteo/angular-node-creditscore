@@ -20,9 +20,7 @@ push-to-dockerhub:
       - internal/docker-push:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
-          tag:  creditscore-$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
-          #repository: $DOCKER_USERNAME/$WERCKER_APPLICATION_NAME
-          #registry: https://index.docker.io/v2/
+          tag:  creditscore-$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMI
           working-dir: $WERCKER_ROOT
           repository: $DOCKER_REPO
           registry: https://iad.ocir.io/v2
@@ -50,20 +48,13 @@ deploy-to-oke:
     - script:
         name: wait to create namespace
         code: sleep 10
- 
-    - kubectl:
-        name: create OCR secret
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create secret docker-registry wrelease --docker-server=wcr.io --docker-username=$WERCKER_APPLICATION_OWNER_NAME --docker-password=$KUBERNETES_TOKEN --docker-email=${WERCKER_APPLICATION_OWNER_NAME}@mail.com --namespace=$WERCKER_APPLICATION_OWNER_NAME; echo 'secret step'
-    
+     
     - kubectl:
         name: create deplyoment
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
+        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=creditscore
 
     - script:
         name: "Visualise Ingress config"
@@ -74,7 +65,7 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/ingress.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
+        command: apply -f $WERCKER_ROOT/ingress.yml --namespace=creditscore
         
     - kubectl:
         name: get LoadBalancer public IP address

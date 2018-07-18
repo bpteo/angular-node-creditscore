@@ -28,7 +28,7 @@ spec:
         - containerPort: 3000
           protocol: TCP
       imagePullSecrets:
-      - name: wrelease
+      - name: ${KUBERNETES_IMAGESECRET}
       restartPolicy: Always
 ---
 apiVersion: v1
